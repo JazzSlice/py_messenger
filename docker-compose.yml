@@ -1,0 +1,5 @@
+services:
+  app:
+    image: jazzslice/py_msg:1.0
+    ports:
+      - 80:80
