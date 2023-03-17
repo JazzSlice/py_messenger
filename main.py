@@ -59,6 +59,7 @@ def getMessages():
 
 @app.route('/send_message')
 def sendMessage():
+    isBot = 0
     sender = request.args['name']
     text = request.args['text']
     time = datetime.now()
@@ -66,7 +67,8 @@ def sendMessage():
     msg = {
         'text' : text,
         'sender' : sender,
-        'time' : json_time
+        'time' : json_time,
+        'isBot' : isBot
     }
     messages_list.append(msg)
     saveInfo(messages_list, db_name)
