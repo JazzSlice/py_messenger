@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Skillbox Chat</title>
+    <title>Sample Chat</title>
 
-    <!-- Подключение библиотеки jQuery-->
+    <!-- join jQuery-->
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
     </script>
 
-    <!-- Код взаимодействия с сервером -->
+    <!-- server interact -->
     <script language="JavaScript">
-        // Загрузка и отображение сообщений
+        // load & show msgs
         function loadMessages() {
            $.get(
             "/get_messages",
@@ -27,7 +27,7 @@
                     var time = message["time"];
                     console.log(name, text, time);
                     var html = "<div> [<b> " + name + " </b>]: " + text + " <i>" + time + "</i> </div>";
-                    var div = $(html); // div = визуальный элемент с сообщением
+                    var div = $(html); // container with msg
 
                     $("#chat_window").append(div);
                 }
@@ -35,33 +35,33 @@
            );
         }
 
-        // Отправка сообщения
+        // send msgs foo
         function sendMessage() {
-            var name = $("#name").val(); // Кладем текст из поля "name" в переменную
+            var name = $("#name").val(); // save name value
             var text = $("#text").val();
             $.get("/send_message", { "name" : name, "text" : text});
 
             $("#text").val("");
         }
 
-        // При загрузке страницы
+        // while page loading
         $(() => {
-           // При нажатии клавиш в поле текст
+           // while stdin
            $("#text").on("keypress", (event) => {
-                // При нажатии Enter, вызвать функцию sendMessage
+                // whine enter was put
                 if (event.keyCode == 13) {
                     sendMessage();
                 }
            });
 
-           // Каждую секунду вызывать loadMessages
+           // call loadmsgs to upload view
            setInterval(loadMessages, 1000);
         });
 
     </script>
 </head>
 <body>
-    <!-- Интерфейс: имя, окно чата, текст сообщения -->
+    <!-- Interface: name, view, msgs txt -->
     <b>Ваше Имя:</b>
     <input id="name" type="text" placeholder="Ваше имя"/>
 
