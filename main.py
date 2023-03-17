@@ -10,6 +10,29 @@ from datetime import datetime
 from flask import Flask, render_template, request
 import json
 
+class Bot:
+    def __init__(self):
+        self.isBot = 1
+
+    def check_updates(messages_list):
+        isBot = 1
+        last_msg = messages_list[len(messages_list) - 1]
+        if last_msg['isBot'] != 1:
+            match last_msg['text']:
+                case 'hi':
+                    text = 'Hello there!'
+                case 'bye':
+                    text = 'See you!'
+            time = datetime.now()
+            json_time = time.strftime('%H:%M')
+            bot_msg = {
+                    'text' : text,
+                    'sender' : 'bot',
+                    'time' : json_time,
+                    'isBot' : isBot
+            }
+            messages_list.append(bot_msg)
+            saveInfo(messages_list, db_name)
 
 def loadInfo(db_name):
     with open(db_name, 'r') as db:
@@ -47,6 +70,7 @@ def sendMessage():
     }
     messages_list.append(msg)
     saveInfo(messages_list, db_name)
+    Bot.check_updates(messages_list)
 
 app.run(host='0.0.0.0', port=80)
 
